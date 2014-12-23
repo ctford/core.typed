@@ -26,7 +26,7 @@
   (let [f (-> nsym coerce/ns->file)
         res (io/resource f)]
     (if res
-      (ns-form-for-file res)
+      (-> res str java.net.URLDecoder/decode ns-form-for-file)
       (err/warn (str "File for " nsym " not found on classpath: " f)))))
 
 (defn ns-form-deps
