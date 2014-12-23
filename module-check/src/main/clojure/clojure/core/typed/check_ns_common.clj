@@ -19,7 +19,7 @@
   (let [f ((impl/v 'cljs.analyzer/ns->relpath) nsym)
         res (if (re-find #"^file://" f) (java.net.URL. f) (io/resource f))]
     (assert res (str "Can't find " f " in classpath"))
-    (io/reader res)))
+    (-> res str java.net.URLDecoder/decode io/reader)))
 
 (defn check-ns-info
   [impl ns-or-syms & {:keys [collect-only trace profile file-mapping]}]
